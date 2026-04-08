@@ -1,0 +1,17 @@
+export const Post1 = ["迪尔科内尔"];
+export const Post2 = ["敦巴伦"];
+export const Post3 = ["班格"];
+export const Post4 = ["艾明马恰"];
+export const Post5 = ["塔汀"];
+export const Post6 = ["塔拉"];
+export const Post7 = ["卡普"];
+export const Post8 = ["贝尔法斯特"];
+export const Post9 = ["斯卡哈海滨"];
+export const Post101 = ["克拉"];
+export const Post102 = ["菲利亚"];
+export const Post103 = ["库拉"];
+export const Post104 = ["巴勒斯"];
+export const Post201 = ["卡鲁森林"];
+export const Post202 = ["绿洲"];
+export const Post203 = ["凯利达"];
+export const Post204 = ["佩拉"];

@@ -1,0 +1,10 @@
+export const HerbalismItem50040 = ["魔法豆"];
+export const HerbalismItem51101 = ["血红药草"];
+export const HerbalismItem51102 = ["魔法药草"];
+export const HerbalismItem51103 = ["阳光药草"];
+export const HerbalismItem51104 = ["基础药草"];
+export const HerbalismItem51105 = ["黄金药草"];
+export const HerbalismItem51107 = ["白色药草"];
+export const HerbalismItem51108 = ["解毒草"];
+export const HerbalismItem51109 = ["毒药草"];
+export const HerbalismItem51110 = ["曼德拉草"];

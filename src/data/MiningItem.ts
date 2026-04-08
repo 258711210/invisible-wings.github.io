@@ -1,0 +1,9 @@
+export const MiningItem51045 = ["石精灵的岩石"];
+export const MiningItem64010 = ["矿石"];
+export const MiningItem64002 = ["矿石"];
+export const MiningItem64004 = ["矿石"];
+export const MiningItem64006 = ["矿石"];
+export const MiningItem64008 = ["矿石"];
+export const MiningItem64053 = ["硫磺地带"];
+export const MiningItem73128 = ["硫磺地带"];
+export const MiningItem73129 = ["硫磺地带"];

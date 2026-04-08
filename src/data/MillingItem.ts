@@ -1,0 +1,9 @@
+export const MillingList = [50022,50023,50041,50042,50043,50044,52511];
+export const EventMillingList = [["哈蒙的春花",52511]];
+export const MillingItem50022 = [52027,10];
+export const MillingItem50023 = [52028,10];
+export const MillingItem50042 = [50037,5];
+export const MillingItem50043 = [50038,5];
+export const MillingItem50041 = [50036,5];
+export const MillingItem50044 = [50040,5];
+export const MillingItem52511 = [52512,10];

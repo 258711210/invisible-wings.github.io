@@ -1,0 +1,14 @@
+export const Pet270601 = ["羊驼"];
+export const Pet270602 = ["圣诞羊驼"];
+export const Pet270603 = ["圣诞羊驼"];
+export const Pet490058 = ["蠢萌羊驼"];
+export const Pet490109 = ["戴帽子的羊驼"];
+export const Pet490235 = ["圣诞羊驼"];
+export const Pet490267 = ["毛茸茸羊驼"];
+export const Pet730201 = ["伙伴[女仆]"];
+export const Pet730202 = ["伙伴[执事]"];
+export const Pet730206 = ["贸易伙伴"];
+export const Pet730207 = ["伙伴[拉格琳]"];
+export const Pet730208 = ["伙伴[威廉]"];
+export const Pet730209 = ["伙伴[雷姆]"];
+export const Pet730210 = ["伙伴[拉姆]"];

@@ -1,0 +1,14 @@
+export const KillMetallurgyList = [64075,64076];
+export const MetallurgyItem64036 = ["淘金点"];
+export const MetallurgyItem64037 = ["淘金点"];
+export const MetallurgyItem64038 = ["淘金点"];
+export const MetallurgyItem64039 = ["淘金点"];
+export const MetallurgyItem64040 = ["淘金点"];
+export const MetallurgyItem64041 = ["淘金点"];
+export const MetallurgyItem64044 = ["淘金点"];
+export const MetallurgyItem64046 = ["淘金点"];
+export const MetallurgyItem64047 = ["淘金点"];
+export const MetallurgyItem64048 = ["淘金点"];
+export const MetallurgyItem64050 = ["淘金点"];
+export const MetallurgyItem64075 = ["紫水晶石巨人"];
+export const MetallurgyItem64076 = ["水晶石巨人"];

@@ -1,0 +1,13 @@
+--- v2/src/views/FormulaView.vue
++++ v2/src/views/FormulaView.vue
+@@ -23,6 +23,10 @@
+ import * as DissolutionData from '../data/DissolutionItem'
+ import * as SellItemData from '../data/SellItem'
+ import * as NPCData from '../data/NPC'
+ import { KillItemList } from '../data/KillItem'
+ import * as GatherItemData from '../data/GatherItem'
+ import * as FishingItemData from '../data/FishingItem'
++import * as MiningItemData from '../data/MiningItem'
++import * as MetallurgyItemData from '../data/MetallurgyItem'
++import * as GiftItemData from '../data/GiftItem'
++import * as QuestItemData from '../data/QuestItem'
