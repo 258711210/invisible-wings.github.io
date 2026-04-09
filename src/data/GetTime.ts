@@ -1,9 +1,0 @@
-export const function GetTime(){Today = new Date();
-export const Year = Today.getFullYear();
-export const Month = Today.getMonth()+1;
-export const Dates = Today.getDate();
-export const Hours = Today.getHours();
-export const Minutes = Today.getMinutes();
-export const Seconds = Today.getSeconds();
-export const Milliseconds = Today.getMilliseconds();
-export const Day = Today.getDay();
