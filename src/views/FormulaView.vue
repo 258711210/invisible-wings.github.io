@@ -294,6 +294,11 @@ const selectedItem = ref<any>(null)
 const isDrawerOpen = ref(false)
 const isSidebarOpen = ref(false)
 
+const currentPage = ref(1)
+const pageSize = ref(20)
+const totalItems = computed(() => items.value.length)
+const totalPages = computed(() => Math.ceil(totalItems.value / pageSize.value))
+
 const handleQuerySearch = () => {
   const querySearch = route.query.search as string
   if (querySearch) {
@@ -323,7 +328,7 @@ const handleQuerySearch = () => {
   }
 }
 
-import { onMounted, watch } from 'vue'
+import { onMounted, onUnmounted, watch } from 'vue'
 onMounted(() => {
   handleQuerySearch()
 })
@@ -489,6 +494,12 @@ const items = computed(() => {
       const levelB = String(b.level).replace(/[^\d.]/g, '')
       return (parseFloat(levelA) || 0) - (parseFloat(levelB) || 0)
     })
+})
+
+const paginatedItems = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value
+  const end = start + pageSize.value
+  return items.value.slice(start, end)
 })
 
 const openDetail = (item: any, skillId?: number) => {
@@ -708,6 +719,76 @@ const handleNpcImgError = (e: Event) => {
 const closeDrawer = () => {
   isDrawerOpen.value = false
 }
+
+const goToPage = (page: number) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++
+  }
+}
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--
+  }
+}
+
+const paginationPages = computed(() => {
+  const pages: (number | '...')[] = []
+  const total = totalPages.value
+  const current = currentPage.value
+  
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
+  const offset = isMobile ? 0 : 2
+
+  pages.push(1)
+
+  if (current > offset + 2) {
+    pages.push('...')
+  }
+
+  const start = Math.max(2, current - offset)
+  const end = Math.min(total - 1, current + offset)
+  
+  for (let i = start; i <= end; i++) {
+    pages.push(i)
+  }
+
+  if (current < total - offset - 1) {
+    pages.push('...')
+  }
+
+  if (total > 1) {
+    pages.push(total)
+  }
+
+  return pages
+})
+
+watch([selectedSkillId, searchQuery], () => {
+  currentPage.value = 1
+})
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('resize', handleResize)
+  }
+})
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', handleResize)
+  }
+})
+
+const handleResize = () => {
+  if (typeof window === 'undefined') return
+}
 </script>
 
 <template>
@@ -757,7 +838,7 @@ const closeDrawer = () => {
 
       <div class="items-container">
         <div 
-          v-for="item in items" 
+          v-for="item in paginatedItems" 
           :key="item.id" 
           :class="['item-list-card', { active: selectedItem?.id === item.id && isDrawerOpen }]"
           @click="openDetail(item)"
@@ -781,6 +862,42 @@ const closeDrawer = () => {
           </div>
           
           <ChevronRight :size="18" class="arrow-icon" />
+        </div>
+      </div>
+
+      <div v-if="totalPages > 1" class="pagination-container">
+        <div class="pagination">
+          <button 
+            class="page-btn" 
+            :disabled="currentPage === 1"
+            @click="prevPage"
+          >
+            上一页
+          </button>
+          
+          <div class="page-numbers">
+            <template v-for="(page, index) in paginationPages" :key="index">
+              <button 
+                v-if="typeof page === 'number'"
+                :class="['page-number', { active: currentPage === page }]"
+                @click="goToPage(page)"
+              >
+                {{ page }}
+              </button>
+              <span v-else class="page-ellipsis">...</span>
+            </template>
+          </div>
+          
+          <button 
+            class="page-btn" 
+            :disabled="currentPage === totalPages"
+            @click="nextPage"
+          >
+            下一页
+          </button>
+        </div>
+        <div class="page-info">
+          第 {{ currentPage }} 页，共 {{ totalPages }} 页，总计 {{ totalItems }} 条
         </div>
       </div>
     </main>
@@ -1473,6 +1590,130 @@ const closeDrawer = () => {
 @keyframes slideLeft {
   0%, 100% { transform: translateX(0); opacity: 1; }
   50% { transform: translateX(-4px); opacity: 0.5; }
+}
+
+.pagination-container {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.page-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 14px;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--gold-mute);
+  color: var(--gold);
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.page-number {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.page-number:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.page-number.active {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--gold);
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.page-ellipsis {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.page-info {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+  
+  .page-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+  
+  .page-number {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+  
+  .page-ellipsis {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+  
+  .page-numbers {
+    gap: 3px;
+  }
+  
+  .page-info {
+    font-size: 10px;
+  }
 }
 
 .item-list-card {
