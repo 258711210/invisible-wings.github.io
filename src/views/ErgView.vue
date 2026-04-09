@@ -48,6 +48,7 @@ const weaponCategories = [
 ]
 
 const selectedCategory = ref('Dualgun')
+const categoryRefs = ref<HTMLElement[]>([])
 
 interface Material {
   id: number | null
@@ -114,6 +115,26 @@ const breakthroughs = computed<BreakthroughStep[]>(() => {
   
   return result.sort((a, b) => a.targetLevel - b.targetLevel)
 })
+
+const scrollToCategory = (index: number) => {
+  const element = categoryRefs.value[index]
+  if (element) {
+    const container = element.parentElement
+    if (container) {
+      const containerRect = container.getBoundingClientRect()
+      const elementRect = element.getBoundingClientRect()
+      const scrollLeft = container.scrollLeft
+      const containerCenter = containerRect.width / 2
+      const elementCenter = elementRect.left - containerRect.left + elementRect.width / 2
+      const scrollTo = scrollLeft + (elementCenter - containerCenter)
+      
+      container.scrollTo({
+        left: scrollTo,
+        behavior: 'smooth'
+      })
+    }
+  }
+}
 </script>
 
 <template>
@@ -125,10 +146,11 @@ const breakthroughs = computed<BreakthroughStep[]>(() => {
       </div>
       <div class="nav-scroll">
         <button 
-          v-for="cat in weaponCategories" 
+          v-for="(cat, index) in weaponCategories" 
           :key="cat.id"
           :class="['nav-item', { active: selectedCategory === cat.id }]"
-          @click="selectedCategory = cat.id"
+          @click="selectedCategory = cat.id; scrollToCategory(index)"
+          :ref="el => categoryRefs[index] = el"
         >
           <component :is="cat.icon" :size="18" />
           <span>{{ cat.label }}</span>
@@ -440,6 +462,8 @@ const breakthroughs = computed<BreakthroughStep[]>(() => {
 @media (max-width: 1024px) {
   .erg-page {
     flex-direction: column;
+    padding: 10px;
+    gap: 15px;
   }
   .weapon-nav {
     width: 100%;
@@ -455,9 +479,116 @@ const breakthroughs = computed<BreakthroughStep[]>(() => {
     width: auto;
     flex-shrink: 0;
     margin-bottom: 0;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+  .nav-item span {
+    white-space: nowrap;
+  }
+  .main-content {
+    gap: 15px;
+  }
+  .header {
+    padding: 12px 16px;
+  }
+  .title-wrap {
+    gap: 8px;
+  }
+  .title-wrap h2 {
+    font-size: 18px;
   }
   .breakthrough-grid {
     grid-template-columns: 1fr;
+    gap: 15px;
+    padding-right: 0;
+  }
+  .breakthrough-card {
+    padding: 16px;
+    gap: 12px;
+  }
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .level-path {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .level-box {
+    font-size: 13px;
+    padding: 4px 10px;
+  }
+  .level-box.target {
+    font-size: 14px;
+  }
+  .rate-badge {
+    align-self: flex-end;
+    min-width: 70px;
+    padding: 3px 10px;
+  }
+  .rate-value {
+    font-size: 16px;
+  }
+  .benefit-tag {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  .materials-section {
+    gap: 8px;
+  }
+  .materials-list {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .mat-item {
+    padding: 8px;
+    gap: 8px;
+  }
+  .mat-item.sacrificial {
+    grid-column: span 1;
+  }
+  .mat-visual {
+    width: 32px;
+    height: 32px;
+  }
+  .mat-img {
+    width: 24px;
+    height: 24px;
+  }
+  .mat-name {
+    font-size: 12px;
+  }
+  .mat-meta {
+    gap: 6px;
+  }
+  .mat-qty {
+    font-size: 11px;
+  }
+  .mat-note {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .erg-page {
+    padding: 8px;
+  }
+  .header {
+    padding: 10px 14px;
+  }
+  .title-wrap h2 {
+    font-size: 16px;
+  }
+  .breakthrough-card {
+    padding: 14px;
+  }
+  .nav-item {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  .benefit-tag {
+    font-size: 11px;
   }
 }
 </style>

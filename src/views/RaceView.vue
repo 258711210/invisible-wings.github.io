@@ -901,6 +901,18 @@ const handleDetailImageError = (e: Event) => {
   transform: translateY(100%);
 }
 
+/* Scrollbar */
+.list-container::-webkit-scrollbar,
+.detail-scroll-area::-webkit-scrollbar {
+  width: 5px;
+}
+
+.list-container::-webkit-scrollbar-thumb,
+.detail-scroll-area::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 10px;
+}
+
 /* PC端宽度自适应优化 */
 @media (min-width: 1600px) {
   .detail-panel {

@@ -787,13 +787,13 @@ const closeDrawer = () => {
 
     <!-- Empty State / Welcome (当未选择技能时显示) -->
     <main v-else class="main-content empty-state-container">
-      <div class="empty-state-content glass-panel">
+      <div class="empty-state-content glass-panel" @click="isSidebarOpen = true">
         <div class="welcome-icon">📖</div>
         <h2 class="gold-text">欢迎使用制作百科</h2>
         <p class="welcome-text">请从左侧目录选择一个技能，查看其详细配方与采集信息</p>
         <div class="welcome-hint">
           <ChevronRight :size="16" class="hint-arrow" />
-          <span>点击左侧图标开始探索</span>
+          <span>点击开始探索</span>
         </div>
       </div>
     </main>
@@ -1433,6 +1433,14 @@ const closeDrawer = () => {
   text-align: center;
   border: 1px solid rgba(212, 175, 55, 0.2);
   background: rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.empty-state-content:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
 }
 
 .welcome-icon {
@@ -2037,6 +2045,34 @@ const closeDrawer = () => {
   .items-container {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
+  
+  /* 确保移动端技能图标可见 */
+  .skill-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  
+  .skill-icon-img {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+  
+  .skill-nav {
+    padding-right: 5px;
+    margin-right: -5px;
+  }
+  
+  /* 优化移动端技能按钮文字显示 */
+  .skill-btn span {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2085,6 +2121,35 @@ const closeDrawer = () => {
     justify-content: center;
     gap: 6px;
     overflow: visible;
+  }
+
+  /* Welcome Area Optimization for Mobile */
+  .empty-state-container {
+    padding: 20px;
+  }
+
+  .empty-state-content {
+    max-width: 90%;
+    padding: 40px 20px;
+    border-radius: 16px;
+  }
+
+  .welcome-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .welcome-text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 12px 0 24px;
+    padding: 0 10px;
+  }
+
+  .welcome-hint {
+    padding: 12px 24px;
+    font-size: 14px;
+    white-space: nowrap;
   }
 
   .shop-price-header {

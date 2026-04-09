@@ -45,6 +45,16 @@ const navItems = [
   { name: '时刻表', path: '/schedule', icon: Calendar },
   { name: '尔格强化', path: '/erg', icon: Zap },
 ]
+
+// 路由路径到模块名称的映射
+const routeToModuleName = {
+  '/': '首页',
+  '/formula': '配方百科',
+  '/race': '怪物筛查',
+  '/schedule': '时刻表',
+  '/erg': '尔格强化',
+  '/admin': '管理后台'
+}
 </script>
 
 <template>
@@ -100,7 +110,7 @@ const navItems = [
           <Menu :size="24" />
         </button>
         <div class="breadcrumb">
-          <span>{{ ($route.name as string) === 'home' ? '欢迎光临' : ($route.name as string) }}</span>
+          <span>{{ routeToModuleName[$route.path] || $route.name || '欢迎光临' }}</span>
         </div >
         <div class="header-actions">
            <div class="quick-time gold-text">
