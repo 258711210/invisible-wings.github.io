@@ -47,7 +47,7 @@ const navItems = [
 ]
 
 // 路由路径到模块名称的映射
-const routeToModuleName = {
+const routeToModuleName: Record<string, string> = {
   '/': '首页',
   '/formula': '配方百科',
   '/race': '怪物筛查',

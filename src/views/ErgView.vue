@@ -48,7 +48,7 @@ const weaponCategories = [
 ]
 
 const selectedCategory = ref('Dualgun')
-const categoryRefs = ref<HTMLElement[]>([])
+const categoryRefs = ref<(any)[]>([])
 
 interface Material {
   id: number | null
