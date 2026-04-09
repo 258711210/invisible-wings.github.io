@@ -9,13 +9,13 @@ import {
 const timeStore = useTimeStore()
 
 const dailyEvents = [
-  { id: 0, name: '立春 (Imbolc)', day: '星期日', effect: '生产成功率提升，音乐演奏效果增加', icon: Sparkles, color: '#FFD700', details: '适合制作高价值装备。' },
-  { id: 1, name: '春分 (Alban Eiler)', day: '星期一', effect: '生活技能经验加成，采集速度提升', icon: Compass, color: '#90EE90', details: '木材、矿石采集效率极高。' },
-  { id: 2, name: '入夏 (Beltane)', day: '星期二', effect: '地下城掉落率微增，商店价格调整', icon: Sword, color: '#FFB6C1', details: '地下城攻略的最佳时机。' },
-  { id: 3, name: '夏至 (Alban Heruin)', day: '星期三', effect: '药剂制作成功率，工会经验加成', icon: Sparkles, color: '#87CEFA', details: '适合大规模囤积药水。' },
-  { id: 4, name: '秋收 (Lughnasadh)', day: '星期四', effect: '打铁、缝纫成功率大幅提升', icon: ShoppingBag, color: '#FFA07A', details: '装备制作与修炼核心日。' },
-  { id: 5, name: '秋收节 (Alban Elfed)', day: '星期五', effect: '料理、手艺成功率提升，兼职奖励增加', icon: Calendar, color: '#DDA0DD', details: '兼职回报最丰厚的一天。' },
-  { id: 6, name: '元旦 (Samhain)', day: '星期六', effect: '探险经验加成，年龄增长', icon: Clock, color: '#F0E68C', details: '全服年龄增长，属性点提升。' },
+  { id: 0, name: '立春 (Imbolc)', day: '星期日', effect: '暴击率提高、Lucky Finish概率提高、演奏/魔法音乐成功率提高', icon: Sparkles, color: '#FFD700', details: '这是“战斗与艺术日”。对于战斗角色来说，高暴击率让这一天成为挑战强敌的理想时间。对于喜欢音乐的玩家，这是练习演奏技能、使用魔法音乐的最佳时机，成功率大幅提升。' },
+  { id: 1, name: '春分 (Alban Eiler)', day: '星期一', effect: '生产技能成功率提高、生活系技能升级奖励增加、生产物品质量提高', icon: Compass, color: '#90EE90', details: '这是“生产与生活日”。对于生产者来说，这一天是提高技能成功率、获取更多资源的理想时间。对于喜欢生活的玩家，这是升级技能、提高生活质量的最佳时机。' },
+  { id: 2, name: '入夏 (Beltane)', day: '星期二', effect: '地下城物品掉落概率提高、战斗系技能升级奖励增加', icon: Sword, color: '#FFB6C1', details: '这是“战斗与冒险日”。地下城掉落率提高，战斗技能升级奖励增加，是挑战强敌的最佳时机。' },
+  { id: 3, name: '夏至 (Alban Heruin)', day: '星期三', effect: '采集率提高、商店物品价格减少5%、银行手续费减少25%、技能完全修炼时获得的经验值增加', icon: Sparkles, color: '#87CEFA', details: '这是“采集与修炼日”。适合进行野外采集（如采矿、采药），或者去商店大量采购物资。同时，这也是一个非常适合静下心来完全修炼技能的日子，可以获得更多经验。' },
+  { id: 4, name: '秋收 (Lughnasadh)', day: '星期四', effect: '魔法释放成功率提高、魔法系技能升级奖励增加、使用装备时获得的熟练度增加', icon: ShoppingBag, color: '#FFA07A', details: '这是“魔法日”。非常适合法师类角色，用来练习魔法技能或进行魔法释放（附魔），成功率更高。同时，通过战斗来提升装备熟练度也是不错的选择' },
+  { id: 5, name: '秋收节 (Alban Elfed)', day: '星期五', effect: '死亡后惩罚减少、所有药水效果提高、完成任务时的报酬增加。', icon: Calendar, color: '#DDA0DD', details: '这是“任务与挑战日”。适合挑战高难度的BOSS或任务，因为死亡惩罚降低，容错率更高。药水的增强效果也让战斗更持久。同时，这也是清理各种任务的好时机，可以获得更多报酬' },
+  { id: 6, name: '元旦 (Samhain)', day: '星期六', effect: '年龄增长并获得相应AP、食用料理效果提高、探测仪感知范围增加、素描更容易完成', icon: Clock, color: '#F0E68C', details: '这是“生活与成长日”。游戏角色会在这一天增加年龄并获得宝贵的AP（天赋点数）。适合进行烹饪、钓鱼、素描等休闲生活活动，料理的效果会更好。' },
 ]
 
 const currentEvent = computed(() => dailyEvents[timeStore.realityDay])
@@ -517,10 +517,56 @@ const features = [
 }
 
 @media (max-width: 768px) {
-  .home-view { padding: 1rem; gap: 3rem; }
-  .hero-title { font-size: 2rem; }
+  .home-view { padding: 1rem; gap: 2rem; }
+  
+  /* Hero Section */
+  .hero-title { font-size: 2rem; line-height: 1.2; }
+  .hero-subtitle-rebuild { font-size: 0.8rem; letter-spacing: 2px; }
+  .hero-desc { font-size: 1rem; margin-bottom: 2rem; }
   .hero-content { flex-direction: column; align-items: stretch; }
-  .today-buff-widget { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .hero-time { padding: 1rem 2rem; min-width: auto; }
+  .time-main .value { font-size: 2.5rem; }
+  
+  /* Today Buff Widget */
+  .today-buff-widget { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1rem; }
+  .buff-widget-title { font-size: 1rem; }
+  .buff-widget-desc { font-size: 0.8rem; line-height: 1.4; }
   .buff-widget-timer { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-left: 0; padding-top: 1rem; width: 100%; }
+  
+  /* Active Buff Section */
+  .active-buff-hero { padding: 1.5rem; }
+  .buff-info h1 { font-size: 1.5rem; gap: 0.5rem; }
+  .buff-info h1 span { font-size: 0.9rem; }
+  .effect-desc { font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
+  .buff-details { font-size: 0.8rem; padding: 0.5rem 0.8rem; }
+  
+  /* Features Section */
+  .section-title { font-size: 1.3rem; }
+  .features-grid { gap: 1.5rem; }
+  .feature-card { padding: 1.5rem; }
+  .feature-card h3 { font-size: 1.2rem; }
+  .feature-card p { font-size: 0.85rem; }
+  
+  /* Weekly Schedule */
+  .weekly-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .day-card { padding: 1.2rem; }
+  .day-card-body h4 { font-size: 1rem; }
+  .day-card-body p { font-size: 0.8rem; }
+  
+  /* Footer */
+  .home-footer { padding: 2rem 0 1rem; }
+  .home-footer p { font-size: 1rem; }
+  .footer-desc { font-size: 0.8rem !important; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 1.8rem; }
+  .hero-subtitle-rebuild { font-size: 0.7rem; letter-spacing: 1px; }
+  .hero-desc { font-size: 0.9rem; }
+  .time-main .value { font-size: 2rem; }
+  .buff-info h1 { font-size: 1.3rem; }
+  .effect-desc { font-size: 0.85rem; }
+  .section-title { font-size: 1.2rem; }
+  .feature-card h3 { font-size: 1.1rem; }
 }
 </style>
