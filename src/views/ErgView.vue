@@ -36,13 +36,16 @@ const weaponCategories = [
   { id: 'Shuriken', label: '手里剑', icon: Zap },
   { id: 'Chainblade', label: '链刃', icon: Zap },
   { id: 'Handle', label: '操纵杆', icon: Target },
-  { id: 'Bow', label: '弓 / 弩', icon: Target },
+  { id: 'Bow', label: '弓', icon: Target },
+  { id: 'Crossbow', label: '弩', icon: Target },
   { id: 'Knuckle', label: '拳套', icon: Zap },
   { id: 'Wand', label: '魔杖', icon: Wand2 },
   { id: 'Staff', label: '法杖', icon: Wand2 },
   { id: 'Cylinder', label: '铳炮', icon: Target },
-  { id: 'Sword', label: '各类近战剑', icon: Sword },
-  { id: 'Axe', label: '斧头 / 钝器', icon: Sword },
+  { id: 'OHSword', label: '单手剑', icon: Sword },
+  { id: 'THSword', label: '双手剑', icon: Sword },
+  { id: 'Axe', label: '斧头', icon: Sword },
+  { id: 'Blunt', label: '钝器', icon: Sword },
   { id: 'Lance', label: '骑士枪', icon: Sword },
   { id: 'Atlatl', label: '投射器', icon: Target },
 ]
@@ -73,12 +76,15 @@ const breakthroughs = computed<BreakthroughStep[]>(() => {
   const result: BreakthroughStep[] = []
   
   list.forEach((key: string) => {
-    // 模糊匹配分类
+    // 改进的分类过滤逻辑
     let match = false
-    if (selectedCategory.value === 'Sword') match = key.includes('Sword')
-    else if (selectedCategory.value === 'Axe') match = key.includes('Axe') || key.includes('Blunt')
-    else if (selectedCategory.value === 'Bow') match = key.includes('Bow') || key.includes('Crossbow')
-    else match = key.startsWith(selectedCategory.value)
+    if (selectedCategory.value === 'Axe') {
+      match = key.includes('Axe')
+    } else if (selectedCategory.value === 'Blunt') {
+      match = key.includes('Blunt')
+    } else {
+      match = key.startsWith(selectedCategory.value)
+    }
 
     if (match) {
       const raw = (ErgEnhanceData as any)[key]
@@ -176,9 +182,7 @@ const scrollToCategory = (index: number) => {
         >
           <div class="card-header">
             <div class="level-path">
-              <span class="level-box">Lv.{{ step.startLevel }}</span>
-              <ChevronRight class="arrow" :size="20" />
-              <span class="level-box target">Lv.{{ step.targetLevel }}</span>
+              <span class="level-box target">Lv.{{ step.targetLevel }} 突破</span>
             </div>
             <div class="rate-badge gold-border">
               <span class="rate-label">成功率</span>
